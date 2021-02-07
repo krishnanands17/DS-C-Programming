@@ -1,259 +1,218 @@
-#include<conio.h>
-#include<stdio.h>
 #include<stdlib.h>
-int count=0,i=1;
 struct node
-{
- struct node *left;
- int data;
- struct node *right;
- };
- struct node *head=NULL;
- struct node *GetNode();
- void display();
- void insertLast();
- void insertFirst();
- void insertPos();
- void deleteFirst();
- void deleteLast();
+{ struct node *left;
+  int data;
+  struct node *right;
+}   ;
+struct node *head=NULL;
+struct node * GetNode() ;
+void insertLast() ;
+void insertFirst();
+void display();
+void search();
+ void insertpos();
+ void deletefirst();
+ void deletelast();
  void deletePos();
- void search();
- void main()
- {
-  int opt=0;
-  clrscr();
-  while(opt!=9)
-  {
-  printf("\n\nMenu\n1.InsertFirst\n2.InsertLast\n3.Insert at Position\n4.DeleteFirst\n5.DeleteLast\n6.Delete at position\n7.Search\n8.Display\n9.Exit\n\nEnter your Choice:");
-  scanf("%d",&opt);
-  switch(opt)
-  {
-   case 1:insertFirst();
-   count++;
-   break;
-   case 2:insertLast();
-   break;
-   case 3:insertPos();
-   break;
-   case 4:deleteFirst();
-   break;
-   case 5:deleteLast();
-   break;
-   case 6:deletePos();
-   break;
-   case 7:search();
-   break;
-   case 8:display();
-   break;
-   default:exit(0);
-	   printf("Wrong Input");
-   break;
+void main()
+{   int opt=0    ;
+   while(opt!=9)
+   {  printf("\nMenu\n1.INSERT FIRST \n2.INSERT LAST \n3.INSERT at POSITION\n4.DELETE FIRST \n5.DELETE LAST \n6.DELETE AT POSITION\n7.SEARCH \n8.DISPLAY \n9.Exit \nEnter the Choice:");
+      scanf("%d",&opt);
+      switch(opt)
+      { case 1:insertFirst();
+		break;
+	case 2:insertLast();
+	       break   ;
+	case 3:insertpos();
+		break;
+	 case 4:deletefirst();
+		break;
+	  case 5:deletelast();
+		break;
+	 case 6:deletePos();
+		  break;
+	  case 7:search();
+		 break;
+	case 8:display();
+		 break;
+      }
    }
-   }
+   printf("Good Bye");
    getch();
-}
-
+   }
 void display()
-{
- struct node *ptr=head;
- if(head==NULL)
- {
-  printf("List is Empty");
-  return;
+{ struct node *ptr=head;
+  if (head==NULL)
+  { printf("\n List Empty");
+    return;
   }
-  printf("Elements are:\n");
+  printf("The Elements are\n");
   while(ptr!=NULL)
-  {
-   printf("%d\t",ptr->data);
-   ptr=ptr->right;
+  {  printf("%d\t",ptr->data);
+     ptr=ptr->right;
    }
 }
-struct node *GetNode()
-{
- int x;
- struct node *ne=(struct node *)malloc(sizeof(struct node));
- if(ne==NULL)
-  printf("Insufficient Memory\n");
-  else
-  {
-    printf("Enter the value to insert");
-    scanf("%d",&x);
-    ne->left=NULL;
-    ne->right=NULL;
-    ne->data=x;
-    }
-    return ne;
+struct node * GetNode()
+  { int x;
+   struct node *ne=(struct node *)malloc(sizeof(struct node ));
+    if (ne==NULL)
+     printf("insufficient memory\n");
+    else
+   {      printf("Enter the value to insert:");
+	 scanf("%d",&x);
+	 ne->left=NULL ;
+     ne->right=NULL ;
+     ne->data=x;
+   }
+     return ne;
 }
-
 void insertFirst()
-{
- struct node *ne;
- ne=GetNode();
- if(ne==NULL)
-   return;
- if(head==NULL)
-  head=ne;
- else
- {
-  head->left=ne;
-  ne->right=head;
-  head=ne;
-  }
-  display();
+{    struct node *ne;
+    ne=GetNode();
+    if (ne==NULL)  return;
+    if (head==NULL)
+       head=ne;
+    else
+     { head->left=ne;
+      ne->right=head;
+      head=ne;
+    }
+    display();
 }
-
 void insertLast()
-{
- struct node *ne,*ptr;
- ne=GetNode();
- if(ne==NULL)
-  return;
- if(head==NULL)
-  head=ne;
- else
- {
-  ptr=head;
-  while(ptr->right!=NULL)
-  {
-   ptr=ptr->right;
-   }
-   ptr->right=ne;
-   ne->left=ptr;
+{  struct node *ne,*ptr;
+    ne=GetNode();
+  if (ne==NULL)       return;
+   if (head==NULL)
+     head=ne;
+   else
+   {  ptr=head;
+      while(ptr->right!=NULL)
+      { ptr=ptr->right;
+      }
+      ptr->right=ne;
+      ne->left=ptr;
    }
    display();
 }
-
-void insertPos()
-{
- int value;
- struct node *ne,*ptr,*ptr1;
- ne=GetNode();
- if(ne==NULL)
-  return;
- if(head==NULL)
- {
-   printf("List is Empty so the node is inserted as the first node");
+ void insertpos()
+ {   int value;
+    struct node *ne,*ptr,*ptr1;
+    ne=GetNode();
+  if (ne==NULL)     return;
+  if (head==NULL)
+ {  printf("List is Empty so the node is inserted as the first node");
    head=ne;
    return;
-  }
-  printf("Enter the key value after which the node has to be inserted\n");
+ }
+  printf("Enter the key value after which the node has to be inserted\n ");
   scanf("%d",&value);
-  ptr=head;
-  while(ptr->right!=NULL && ptr->data!=value)
-  {
-   ptr=ptr->right;
-   }
-  if(ptr->right==NULL)
-  {
-   ptr->right=ne;
-   ne->left=ptr;
-   printf("\n Node is inserted at last position");
-   }
+   ptr=head;
+ while(ptr->right!=NULL && ptr->data!=value)
+ {  ptr=ptr->right;
+ }
+ if (ptr->right==NULL)
+ {  ptr->right=ne;
+    ne->left=ptr;
+    printf("\n node is inserted at the last position");
+ }
   else
-  {
-   ptr1=ptr->right;
-   ne->right=ptr1;
-   ne->left=ptr;
-   ptr->right=ne;
-   ptr1->left=ne;
-   }
-   printf("\nElement is inserted\n");
+  {     ptr1=ptr->right;
+	ne->right=ptr1;
+	ne->left=ptr;
+	ptr->right=ne ;
+	ptr1->left=ne;
+
+
+    }
+   printf("\nthe Element is inserted\n");
    display();
 }
 
-void deleteFirst()
-{
-  struct node *ptr;
-  if(head==NULL)
-  {
-   printf("List is empty\n");
-   return;
-   }
-  ptr=head;
-  head=head->right;
-  if(head!=NULL)
-    head->left=NULL;
+void deletefirst()
+{  struct node *ptr;
+   if (head==NULL)
+   {     printf("list is empty\n");
+	  return;
+    }
+    ptr=head;
+    head=head->right;
+    if (head!=NULL)
+	 head->left=NULL;
     free(ptr);
     display();
 }
-
-void deleteLast()
-{
- struct node *ptr,*prev;
- if(head==NULL)
- {
-  printf("\nList is empty\n");
-  return;
-  }
-  if(head->right==NULL)
-  {
-    free(head);
-    head=NULL;
-    }
-    ptr=head->right;
-    while(ptr->right!=NULL)
-    {
-     ptr=ptr->right;
+void deletelast()
+{  struct node *ptr,*prev;
+   if (head==NULL)
+    {  printf("\nList is empty\n");
+       return;
      }
-     prev=ptr->left;
-     prev->right=NULL;
-     free(ptr);
-     display();
+     if (head->right==NULL)
+       { free(head);
+	  head=NULL;
+	  return;
+	}
+      ptr=head->right;
+      while(ptr->right!=NULL)
+      {  ptr=ptr->right;
+      }
+       prev=ptr->left;
+       prev->right=NULL;
+       free(ptr);
+       display();
 }
-
 void deletePos()
-{
- struct node *prev,*next,*temp;
- int x;
- printf("Enter the position to be deleted");
-  scanf("%d",&x);
- if(head==NULL)
- {
-  printf("\nList is empty");
-  return;
-  }
-  else if(x==count)
-  deleteLast();
-  else if(x==1)
-  deleteFirst();
-  else
-  {
-   temp=head;
-   while(i<x)
-   {
-   temp=temp->right;
-    i++;
-   }
-   temp->left->right=temp->right;
-   temp->right->left=temp->left;
-   free(temp);
-}
+{  struct node *ptr,*prev,*next;
+   int x;
+   if (head==NULL)
+	{ printf("\nlist is empty\n");
+	  return;
+	 }
+    printf("Enter the element to delete; ");
+    scanf("%d",&x);
+    if (head->data==x)
+       {          ptr=head;
+	  head=ptr->right;
+	  if (head!=NULL)
+	  { head->left=NULL;}
+	  free(ptr);
+	  return;
+	}
+
+    ptr=head;
+    while(ptr->data!=x && ptr->right!=NULL)
+    { ptr=ptr->right;
+    }
+     if (ptr->data==x)
+     {        next=ptr->right;
+	  prev=ptr->left;
+	  prev->right=ptr->right;
+	  if (next!=NULL)
+	       next->left=ptr->left;
+	   free(ptr);
+	   return;
+       }
+      printf("\nElement not present in the list\n");
 }
 void search()
-{
- struct node *ptr;
- int x;
- if(head==NULL)
- {
-  printf("\nList is empty");
-  return;
-  }
-  printf("Enter the element to search:");
-  scanf("%d",&x);
-  ptr=head;
-  while(ptr!=NULL)
-  {
-   if(ptr->data==x)
-   {
-     printf("\nElement %d at %d position",ptr->data,i);
-     break;
-     }
-     ptr=ptr->right;
-     i++;
-   }
-    if(ptr==NULL)
-      printf("\nElement not in the list\n");
+{  struct node *ptr;
+int x;
+  if (head==NULL)
+       { printf("\nLinkedList Empty");
+	  return;
+	 }
+   printf("Enter  element to search : ");
+   scanf("%d",&x);
+   ptr=head;
+   while(ptr!=NULL)
+   {  if (ptr->data==x)
+      {   printf("\nElement present in the list\n");
+	 break;
+       }
+       ptr=ptr->right;
+    }
+    if (ptr==NULL)
+      printf("\n Element not in the List\n");
 }
-
-
-
